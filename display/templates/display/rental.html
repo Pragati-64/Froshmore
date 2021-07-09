@@ -1,0 +1,129 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href={% static "display/css/rental_style.css" %}> 
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+<div class="topnav" id="myTopnav">
+<a class="active" href="{% url 'home' %}"><i class="fa fa-home" style="vertical-align: middle;"></i>&nbsp;Home</a>
+  <a class="active" href="{% url 'tiffin' %}">Tiffin Services</a>
+  <a class="active" href="{% url 'misc' %}">Miscellaneous</a>
+  <a class="active" href="{% url 'aboutus' %}">About us</a>
+  <div  class="topnav-right">
+     {% if user.is_authenticated %}
+            <div class="login">
+                <a href="{% url 'logout' %}"><i class="fa fa-fw fa-user" style="vertical-align: middle;"></i>&nbsp;logout</a>
+            </div>
+            {%else%}
+            <div class="login">
+                <a href="{% url 'login' %}"><i class="fa fa-fw fa-user"></i>login</a>
+            </div>
+            {%endif%}
+    </div>
+  <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+    <i class="fa fa-bars"></i>
+  </a>
+</div>       
+     <div class="remaining">
+            Choose from the following options
+        </div>
+    
+    
+    
+    
+    
+    
+    <div class="container">
+        <div class="left">
+            
+            <h3>
+                Select Filters
+            </h3>
+            <form method="GET" action="{% url 'rental' %}">
+                <input name="city" id="search" class="form" type="search" placeholder="type city name" aria-label="Search" value="{{city}}">
+                <input name="pincode" id="search" class="form" type="search" placeholder="type pincode" aria-label="Search" value="{{pincode}}">
+            <h4>
+                Facilities
+            </h4>               
+            <form method="GET" action="{% url 'rental'  %}">
+                <label for="area1"></label>
+                <input id="area1" type="checkbox" class="field" name="ac"
+                ><h5>AC</h5>
+                <br>
+                <label for="area2"></label>
+                <input id="area2" type="checkbox" class="field" name="visitor_entry"
+                ><h5>Visitor Entry</h5>
+                <br>
+                <label for="area3"></label>
+                <input id="area3" type="checkbox" class="field" name="water_cooler"
+                ><h5>Water Cooler</h5>
+                <br>
+                <label for="area4"></label>
+                <input id="area4" type="checkbox" class="field" name="room_cleaning"
+                ><h5>Room Cleaning</h5>
+                <input type="submit" value="Apply" class="submit">
+            </form>
+        </div>
+        <div class="right">
+            
+            {% for hostel in hostel_list %}
+                  {% if user.is_authenticated %}                      
+			<a href="{% url 'hosteldesc' hostel.pk %}"  style="text-decoration: none;color:#404040">
+            {%else%}
+                <a href="{% url 'message' %}"  style="text-decoration: none;color:#404040">
+                {%endif%}
+                <div class="hostel_details">
+                    <div class="hostel_image">
+                        <img src='/media/{{hostel.hostel_images1}}' class="hostel_image" alt="">
+                    </div>
+                    <div class="hostel_detail">
+
+                    
+                        <h2>
+                            {{ hostel.hostel_name }}
+                        </h2>
+                        <h4>
+                            Monthly Rent: {{ hostel.hostel_rent }} Intial Deposit: {{ hostel.hostel_deposit }}
+                        </h4>
+                        <h4>
+                            {{ hostel.hostel_address }} 
+                        </h4>
+                        <h5>
+                            {{ hostel.hostel_description }}
+                        </h5>
+                    </div>
+                </div>
+		    {% endfor %}
+            
+
+
+            
+        </div>
+    </div>
+    <div class="footer">
+        
+        Made by <a href="https://github.com/Neeraj-2307" target="_blank">&nbsp;&nbsp;Neeraj Joshi</a>
+        <a href="https://github.com/Pragati-64" target="_blank">&nbsp;&nbsp;Pragati Gupta</a>
+        <a href="https://github.com/anjalirajj" target="_blank">&nbsp;&nbsp;Anjali Raj</a>
+        <a href="https://github.com/aparnasingh26" target="_blank">&nbsp;&nbsp;Aparna Singh</a>
+    
+</div>
+ <!--js for navbar-->
+     <script>
+    function myFunction() {
+  var x = document.getElementById("myTopnav");
+  if (x.className === "topnav" || x.className === "topnav-right") {
+    x.className += " responsive";
+  } else {
+    x.className = "topnav";
+  }
+}
+    </script>
+</body>
+</html>

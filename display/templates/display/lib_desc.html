@@ -1,0 +1,92 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>description page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href={% static "display/css/description_style.css" %}>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA==" crossorigin="anonymous" />
+  </head>
+  <body>
+    <br>
+    <br><br><br>
+
+    {% for hostel in hostel_list %}
+
+    <div class = "card-wrapper">
+      <div class = "card">
+        <!-- card left -->
+        <div class = "product-imgs">
+          <div class = "img-display">
+            <div class = "img-showcase">
+              <img src = '/media/{{hostel.library_images1}}' alt = "" style="height:400px;width:200px;">
+            </div>
+          </div>
+        </div>
+        <!-- card right -->
+        <div class = "product-content">
+          <h2 class = "product-title">{{ hostel.library_name }}</h2>
+          <div class = "product-rating">
+          </div>
+
+          <div class = "product-link">Monthly Charges: ₹{{ hostel.library_deposit }}</div>
+          
+
+          <div class = "product-detail">
+           <h2>about this item: </h2>
+            
+            <ul>
+              <li>Contact Number: <span>{{ hostel.library_contactnumber }}</span></li>
+              <li>City: <span>{{ hostel.library_city }}</span></li>
+              <li>State: <span>{{ hostel.library_state }}</span></li>
+              <li>Pincode: <span></span>{{ hostel.library_pincode }}</li>
+              <li>Address: <span>{{ hostel.library_address }}</span></li>
+              <li>Description: <span>{{ hostel.library_description }}</span></li>
+            </ul>
+          </div>
+
+
+          <div class = "purchase-info">
+            <button type = "button" class = "btn">
+              enroll now <i class = "fas fa-shopping-cart"></i>
+            </button>
+                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="{% url 'library' %}" style="{text-decoration: none;}"><button type = "button" class = "btn">
+              Go back
+            </button></a>
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+
+    {% endfor %}
+
+
+
+    <script>
+    const imgs = document.querySelectorAll('.img-select a');
+const imgBtns = [...imgs];
+let imgId = 1;
+
+imgBtns.forEach((imgItem) => {
+    imgItem.addEventListener('click', (event) => {
+        event.preventDefault();
+        imgId = imgItem.dataset.id;
+        slideImage();
+    });
+});
+
+function slideImage(){
+    const displayWidth = document.querySelector('.img-showcase img:first-child').clientWidth;
+
+    document.querySelector('.img-showcase').style.transform = `translateX(${- (imgId - 1) * displayWidth}px)`;
+}
+
+window.addEventListener('resize', slideImage);
+    </script>
+  </body>
+</html>
