@@ -12,6 +12,18 @@ from .models import orders, user_query,hostel,tiffinservice,laundry,library
 amount_sum=100
 mode=1
 my_id=1
+
+def rentalserviceprovider(request):
+    return render(request,"display/rentalserviceprovider.html")
+def tiffinserviceprovider(request):
+    return render(request,"display/tiffinserviceprovider.html")
+def laundryserviceprovider(request):
+    return render(request,"display/laundryserviceprovider.html")
+def libraryserviceprovider(request):
+    return render(request,"display/libraryserviceprovider.html")
+def allservices(request):
+    return render(request,"display/allservices.html")
+
 def home_page(request):
     if request.method == "POST":
             name = request.POST['name']
@@ -391,4 +403,8 @@ def paymentsuccess(request):
         print(name,body['amount'],"library",body['productId'])
         orders.objects.create(customer_username=person,amount_paid=body['amount'],item_type="library",product_id=body['productId'],product_name=name,transaction_success=True)    
     person=""
+    success()
     return JsonResponse("Yay! ,Payment Completed!",safe=False)
+
+def success(request):
+    return render(request,"display/success.html")

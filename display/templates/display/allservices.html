@@ -1,0 +1,136 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@1,300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href={% static "display/css/style.css" %}> 
+     <link rel="stylesheet" href={% static "display/css/indexnavbar.css" %}>  
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href={% static "display/css/misc.css" %}>
+   <title>Home Page</title>
+</head>
+<body >
+    <!-- Import typed.min.js file from typed.js folder -->
+    <script src= {% static 'display/typed.js-master/lib/typed.min.js'%}></script>
+    </script>
+
+            
+    <div class="our_services">
+        <h1>
+          <a id="1">  Choose  a service  </a>
+        </h1>
+        <br>
+        <div class="services">
+            
+            <div class="rental">
+                <a href="{% url 'rentalserviceprovider' %}"> 
+                    
+                    
+            <img src="{% static 'display/img/rental.png'%}" alt="">
+                
+                <h1>
+                    Rental
+                </h1>
+                <h3>
+                    One stop destination to find all nearby hostels and pg.
+                </h3>
+            </a>
+            </div>
+            <div class="tiffin">
+                
+                <a href="{% url 'tiffinserviceprovider' %}">            
+                <img src="{% static 'display/img/tiffin.png'%}" alt="">
+                <h1>Tiffin</h1>
+                <h3>
+                    Amazing tiffin services to make you feel close to your "Ghar ka khana"
+                </h3>
+                </a>
+            </div>
+            <div class="rental">
+               
+                <a href="{% url 'libraryserviceprovider' %}">           
+            <img src="{% static 'display/img/library.png'%}" alt="">
+               
+                <h1>
+                    Library
+                </h1>
+                <h3>
+                    Satisfy the thirst of knowledge.
+                </h3>
+            </a>
+            </div>
+            <div class="rental">    
+                <a href="{% url 'laundryserviceprovider' %}"> 
+            
+                <img src="{% static 'display/img/laundry.png'%}" alt="">
+                <h1>Laundry</h1>
+                <h3>
+                    You leave it. We Clean it
+                </h3>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+   
+    
+
+    <div class="footer">
+        
+            Made by <a href="https://github.com/Neeraj-2307" target="_blank">&nbsp;&nbsp;Neeraj Joshi</a>
+            <a href="https://github.com/Pragati-64" target="_blank">&nbsp;&nbsp;Pragati Gupta</a>
+            <a href="https://github.com/anjalirajj" target="_blank">&nbsp;&nbsp;Anjali Raj</a>
+            <a href="https://github.com/aparnasingh26" target="_blank">&nbsp;&nbsp;Aparna Singh</a>
+        
+    </div>
+
+      
+    <!-- Add jquery cdn -->
+    <script src=
+"https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+    </script>
+  
+    <!-- Add this script for successful 
+        implementation of typed.js  -->
+    <script>
+        if ($(".text-slider").length == 1) {
+              
+            var typed_strings = 
+                $(".text-slider-items").text();
+  
+            var typed = new Typed(".text-slider", {
+                strings: typed_strings.split(", "),
+                typeSpeed: 50,
+                loop: true,
+                backDelay: 900,
+                backSpeed: 30,
+            });
+        }
+    </script>
+
+
+<!-- added the following script to avoid the reloading problem -->
+
+    <script>
+        if ( window.history.replaceState ) {
+        window.history.replaceState( null, null, window.location.href );
+        }
+    </script>
+    <!--js for navbar-->
+     <script>
+    function myFunction() {
+  var x = document.getElementById("myTopnav");
+  if (x.className === "topnav" || x.className === "topnav-right") {
+    x.className += " responsive";
+  } else {
+    x.className = "topnav";
+  }
+}
+    </script>
+</body>
+</html>
