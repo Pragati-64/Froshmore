@@ -88,3 +88,5 @@ class  orders(models.Model):
     product_name=models.CharField(max_length=500)
     transaction_success=models.BooleanField(default=False)
     transaction_id=models.CharField(max_length=500,default="NA")
+    def __str__(self):
+        return self.customer_username +" " + self.item_type+" "+self.product_name

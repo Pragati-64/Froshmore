@@ -116,12 +116,12 @@ def register(request):
     else:
         return render(request,"display/register.html") 
 
-
+person=""
 def login(request):
+    global person
     if request.method == "POST":
         username = request.POST['username']
         password = request.POST['password']
-
         if not username:
             messages.info(request,"To log in, enter your username!")
             return redirect("/login/")
@@ -131,6 +131,7 @@ def login(request):
         user = auth.authenticate(username=username,password=password)
         if user is not None:
             auth.login(request,user)
+            person=username
             return redirect("/")
         else:
             messages.info(request,"Invalid Credentials!")
@@ -329,69 +330,65 @@ def laundry_description_page(request, laundry_id):
 	    response = "Laundry with id=" + str(id) + " not found."
 	    return HttpResponse(response)
 
-def success(request):
-    return render(request,"display/success.html")
-detail=0
+
 def check_out(request):
-    global detail
     global amount_sum
     amount_sum=0
-    if mode==1:
-        detail=hostel.objects.get(pk=my_id)
+    global mode
+    if mode == 1:
         amount_sum=hostel.objects.get(pk=my_id).hostel_rent
         amount_sum+=hostel.objects.get(pk=my_id).hostel_deposit
         demo={
-        'detail':detail,
         'amount':amount_sum,
         'my_id':my_id,
         'mode':mode
         }
         amount_sum=0
-    elif mode ==2:
+    elif mode == 2:
         amount_sum=tiffinservice.objects.get(pk=my_id).tiffinservice_price
-        detail=tiffinservice.objects.get(pk=my_id)
         demo={
-        'detail':detail,
         'amount':amount_sum,
         'my_id':my_id,
         'mode':mode
           }
         amount_sum=0  
-    elif mode==3:
+    elif mode == 3:
         amount_sum=laundry.objects.get(pk=my_id).laundry_price
-        detail=laundry.objects.get(pk=my_id)
         demo={
-        'detail':detail,
         'amount':amount_sum,
         'my_id':my_id,
         'mode':mode
         }
         amount_sum=0
-    elif mode==4:
+    elif mode == 4:
         amount_sum=library.objects.get(pk=my_id).library_deposit
-        detail=library.objects.get(pk=my_id)
         demo={
-        'detail':detail,
         'amount':amount_sum,
         'my_id':my_id,
         'mode':mode
          }
         amount_sum=0
     return render(request,"display/checkout.html",demo)
-
+amount_sum=0
 def paymentsuccess(request):
     body=json.loads(request.body)
     #print('body:',body)
-    if body['mode']==1:
+    global person
+    if (body['mode']) == '1':
         name=hostel.objects.get(pk=body['productId']).hostel_name
-        orders.objects.create(customer_username="{{user.username}}",amount_paid=body['amount'],item_type="rental",product_id=body['productId'],product_name=name,transaction_succes=True)    
-    elif body['mode']==2:
+        orders.objects.create(customer_username=person,amount_paid=body['amount'],item_type="rental",product_id=body['productId'],product_name=name,transaction_success=True)    
+        print(name,body['amount'],"rental",body['productId'])
+    elif (body['mode']) == '2':
         name=tiffinservice.objects.get(pk=body['productId']).tiffinservice_name
-        orders.objects.create(customer_username="{{user.username}}",amount_paid=body['amount'],item_type="tiffinservice",product_id=body['productId'],product_name=name,transaction_succes=True)    
-    elif body['mode']==3:
+        orders.objects.create(customer_username=person,amount_paid=body['amount'],item_type="tiffinservice",product_id=body['productId'],product_name=name,transaction_success=True)    
+        print(name,body['amount'],"tiffin",body['productId'])
+    elif (body['mode']) == '3':
         name=laundry.objects.get(pk=body['productId']).laundry_name
-        orders.objects.create(customer_username="{{user.username}}",amount_paid=body['amount'],item_type="laundry",product_id=body['productId'],product_name=name,transaction_succes=True)    
-    elif body['mode']==4:
+        print(name,body['amount'],"laundry",body['productId'])
+        orders.objects.create(customer_username=person,amount_paid=body['amount'],item_type="laundry",product_id=body['productId'],product_name=name,transaction_success=True)    
+    elif (body['mode']) == '4':
         name=library.objects.get(pk=body['productId']).library_name
-        orders.objects.create(customer_username="{{user.username}}",amount_paid=body['amount'],item_type="library",product_id=body['productId'],product_name=name,transaction_succes=True)    
+        print(name,body['amount'],"library",body['productId'])
+        orders.objects.create(customer_username=person,amount_paid=body['amount'],item_type="library",product_id=body['productId'],product_name=name,transaction_success=True)    
+    person=""
     return JsonResponse("Yay! ,Payment Completed!",safe=False)

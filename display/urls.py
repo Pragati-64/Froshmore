@@ -15,7 +15,6 @@ urlpatterns = [
 	path("library/",views.lib,name="library"),
 	path("checkout/",views.check_out,name="checkout"),
 	path("aboutus/",views.about,name="aboutus"),
-	path("success/",views.success,name="success"),
 	path("complete/",views.paymentsuccess,name="complete"),
 	path("message/",views.message,name="message"),
     path("<int:hostel_id>/hostel_detail/",views.hostel_description_page,name="hosteldesc"),
