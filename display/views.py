@@ -2,7 +2,9 @@ from django import http
 from django.shortcuts import render,HttpResponse,redirect
 from django.contrib.auth.models import User,auth
 from django.contrib import messages
-from .models import user_query,hostel,tiffinservice,laundry,library
+from django.http import JsonResponse
+import json
+from .models import orders, user_query,hostel,tiffinservice,laundry,library
 # Create your views here.
 
 
@@ -376,3 +378,20 @@ def check_out(request):
          }
         amount_sum=0
     return render(request,"display/checkout.html",demo)
+
+def paymentsuccess(request):
+    body=json.loads(request.body)
+    #print('body:',body)
+    if body['mode']==1:
+        name=hostel.objects.get(pk=body['productId']).hostel_name
+        orders.objects.create(customer_username="{{user.username}}",amount_paid=body['amount'],item_type="rental",product_id=body['productId'],product_name=name,transaction_succes=True)    
+    elif body['mode']==2:
+        name=tiffinservice.objects.get(pk=body['productId']).tiffinservice_name
+        orders.objects.create(customer_username="{{user.username}}",amount_paid=body['amount'],item_type="tiffinservice",product_id=body['productId'],product_name=name,transaction_succes=True)    
+    elif body['mode']==3:
+        name=laundry.objects.get(pk=body['productId']).laundry_name
+        orders.objects.create(customer_username="{{user.username}}",amount_paid=body['amount'],item_type="laundry",product_id=body['productId'],product_name=name,transaction_succes=True)    
+    elif body['mode']==4:
+        name=library.objects.get(pk=body['productId']).library_name
+        orders.objects.create(customer_username="{{user.username}}",amount_paid=body['amount'],item_type="library",product_id=body['productId'],product_name=name,transaction_succes=True)    
+    return JsonResponse("Yay! ,Payment Completed!",safe=False)

@@ -78,3 +78,13 @@ class  library(models.Model):
     library_images1=models.ImageField(upload_to='display/img/library_images', default="" )
     def __str__(self):
         return self.library_name 
+
+
+class  orders(models.Model):
+    customer_username=models.CharField(max_length=80, default="")
+    amount_paid=models.IntegerField(default=0)
+    item_type=models.CharField(max_length=100)
+    product_id=models.CharField(max_length=500)
+    product_name=models.CharField(max_length=500)
+    transaction_success=models.BooleanField(default=False)
+    transaction_id=models.CharField(max_length=500,default="NA")
