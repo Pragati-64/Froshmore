@@ -7,7 +7,9 @@ from .models import user_query,hostel,tiffinservice,laundry,library
 
 
 
-
+amount_sum=100
+mode=1
+my_id=1
 def home_page(request):
     if request.method == "POST":
             name = request.POST['name']
@@ -146,6 +148,8 @@ def message(request):
     return render(request,"display/message.html")              
 
 def rental(request):
+    global mode
+    mode = 1
     if request.method == "GET":
         pincode = request.GET.get('pincode',"")
         city=request.GET.get('city',"")
@@ -187,6 +191,8 @@ def rental(request):
 
 
 def tiffin(request):
+    global mode
+    mode = 2
     if request.method == "GET":
         pincode = request.GET.get('search',"")
         if pincode:
@@ -215,6 +221,8 @@ def misc(request):
     return render(request, "display/misc.html")
 
 def laundary(request):
+    global mode
+    mode = 3
     if request.method == "GET":
         pincode = request.GET.get('search',"")
         if pincode:
@@ -239,6 +247,8 @@ def laundary(request):
     return render(request,"display/laundry.html",demo2)
 
 def lib(request):
+    global mode
+    mode = 4
     if request.method == "GET":
         pincode = request.GET.get('search',"")
         if pincode:
@@ -264,23 +274,27 @@ def lib(request):
 
 
 def hostel_description_page(request, hostel_id):
-
-    hostel_detail = hostel.objects.filter(pk=hostel_id)
+    hostel_detail = hostel.objects.get(pk=hostel_id)
+    global my_id
+    my_id=hostel_id
+    global amount_sum
     if hostel_detail:
         demo = {
-                    'hostel_list' : hostel_detail,
+                    'hostel' : hostel_detail,
                 }
+        
         return render(request,"display/description_page.html",demo)
     else:
 	    response = "Hostel with id=" + str(id) + " not found."
 	    return HttpResponse(response)
 
 def tiffin_description_page(request, tiffinservice_id):
-
-    hostel_detail = tiffinservice.objects.filter(pk=tiffinservice_id)
+    global my_id
+    my_id=tiffinservice_id
+    hostel_detail = tiffinservice.objects.get(pk=tiffinservice_id)
     if hostel_detail:
         demo = {
-                    'hostel_list' : hostel_detail,
+                    'hostel' : hostel_detail,
                 }
         return render(request,"display/tiffin_desc.html",demo)
     else:
@@ -288,11 +302,12 @@ def tiffin_description_page(request, tiffinservice_id):
 	    return HttpResponse(response)
 
 def library_description_page(request, library_id):
-
-    hostel_detail = library.objects.filter(pk=library_id)
+    global my_id
+    my_id=library_id
+    hostel_detail = library.objects.get(pk=library_id)
     if hostel_detail:
         demo = {
-                    'hostel_list' : hostel_detail,
+                    'hostel' : hostel_detail,
                 }
         return render(request,"display/lib_desc.html",demo)
     else:
@@ -300,18 +315,64 @@ def library_description_page(request, library_id):
 	    return HttpResponse(response)
 
 def laundry_description_page(request, laundry_id):
-
-    hostel_detail = laundry.objects.filter(pk=laundry_id)
+    global my_id
+    my_id=laundry_id
+    hostel_detail = laundry.objects.get(pk=laundry_id)
     if hostel_detail:
         demo = {
-                    'hostel_list' : hostel_detail,
+                    'hostel' : hostel_detail,
                 }
         return render(request,"display/laundry_desc.html",demo)
     else:
 	    response = "Laundry with id=" + str(id) + " not found."
 	    return HttpResponse(response)
+
 def success(request):
     return render(request,"display/success.html")
-
+detail=0
 def check_out(request):
-    return render(request,"display/checkout.html")
+    global detail
+    global amount_sum
+    amount_sum=0
+    if mode==1:
+        detail=hostel.objects.get(pk=my_id)
+        amount_sum=hostel.objects.get(pk=my_id).hostel_rent
+        amount_sum+=hostel.objects.get(pk=my_id).hostel_deposit
+        demo={
+        'detail':detail,
+        'amount':amount_sum,
+        'my_id':my_id,
+        'mode':mode
+        }
+        amount_sum=0
+    elif mode ==2:
+        amount_sum=tiffinservice.objects.get(pk=my_id).tiffinservice_price
+        detail=tiffinservice.objects.get(pk=my_id)
+        demo={
+        'detail':detail,
+        'amount':amount_sum,
+        'my_id':my_id,
+        'mode':mode
+          }
+        amount_sum=0  
+    elif mode==3:
+        amount_sum=laundry.objects.get(pk=my_id).laundry_price
+        detail=laundry.objects.get(pk=my_id)
+        demo={
+        'detail':detail,
+        'amount':amount_sum,
+        'my_id':my_id,
+        'mode':mode
+        }
+        amount_sum=0
+    elif mode==4:
+        amount_sum=library.objects.get(pk=my_id).library_deposit
+        detail=library.objects.get(pk=my_id)
+        demo={
+        'detail':detail,
+        'amount':amount_sum,
+        'my_id':my_id,
+        'mode':mode
+         }
+        amount_sum=0
+    return render(request,"display/checkout.html",demo)

@@ -13,7 +13,6 @@
     <br>
     <br><br><br>
 
-    {% for hostel in hostel_list %}
 
     <div class = "card-wrapper">
       <div class = "card">
@@ -60,10 +59,10 @@
 
           <div class = "purchase-info">
             <button type = "button" class = "btn">
-              Book now <i class = "fas fa-shopping-cart"></i>
+            <a href="{% url 'checkout' %}" style="text-decoration: none;">  Book now</a> <i class = "fas fa-shopping-cart"></i>
             </button>
                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <a href="{% url 'tiffin' %}" style="{text-decoration: none;}"><button type = "button" class = "btn">
+            <a href="{% url 'tiffin' %}" style="text-decoration: none;"><button type = "button" class = "btn">
               Go back
             </button></a>
           </div>
@@ -73,7 +72,7 @@
       </div>
     </div>
 
-    {% endfor %}
+
 
 
 

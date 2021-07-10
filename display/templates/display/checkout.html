@@ -23,7 +23,7 @@
             <div class="w3-card-4">
 
                 <header class="w3-container w3-blue">
-                    <h2>AMOUNT:&nbsp;50</h2>
+                    <h2>AMOUNT:&nbsp;$<span>{{amount}}</h2>
                     <h2>USERNAME:&nbsp;{{user.username}}</h2>
                 </header>
 
@@ -38,6 +38,7 @@
     <script src="https://www.paypal.com/sdk/js?client-id=AZgHliz7G0ffiFtvkrBkayEjaChcyTbOyBRbgmMIwGdFHBGmo4QcJYxve8yUNsAlAhyUmdLSNTarF7cl&currency=USD"></script>
     
     <script>
+        var total='{{amount}}'
         // Render the PayPal button into #paypal-button-container
         paypal.Buttons({
 
@@ -46,7 +47,7 @@
                 return actions.order.create({
                     purchase_units: [{
                         amount: {
-                            value:5.00
+                            value:total
                         }
                     }]
                 });
