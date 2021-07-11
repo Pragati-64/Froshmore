@@ -13,72 +13,73 @@
   <body>
     <h1 class="text-center">Enter details of your service : </h1>
     
-  <form class="row g-3 y-10" method="GET" action="{% url 'rentalserviceprovider' %}" >
+  <form class="row g-3 y-10" method="POST" action="{% url 'rentalserviceprovider' %}" >
+  {% csrf_token %}
   <div class="col-md-4">
     <label for="name" class="form-label">Hostel Name</label>
-    <input type="name" class="form-control" id="name">
+    <input type="name" class="form-control" id="name" name="name" >
   </div>
   <div class="col-md-4">
     <label for="contact" class="form-label">Contact Number</label>
-    <input type="number" class="form-control" id="contact">
+    <input type="phone" class="form-control" id="contact" name="contact">
   </div>
   <div class="col-10">
     <label for="Address" class="form-label">Address </label>
-    <input type="text" class="form-control" id="Address" >
+    <input type="text" class="form-control" id="Address" name="Address" >
   </div>
   <br>
   <div class="col-md-4">
+    <label for="area" class="form-label">area</label>
+    <input type="text" class="form-control" id="area" name="area">
+  </div> 
+  <div class="col-md-4">
     <label for="inputCity" class="form-label">City</label>
-    <input type="text" class="form-control" id="inputCity">
+    <input type="text" class="form-control" name="inputCity" id="inputCity">
   </div>
   <div class="col-md-4">
     <label for="inputState" class="form-label">State</label>
-    <input type="text" class="form-control" id="inputState">
+    <input type="text" class="form-control" id="inputState" name="inputState">
   </div>
   <div class="col-md-2">
     <label for="inputZip" class="form-label">PinCode</label>
-    <input type="text" class="form-control" id="inputZip">
+    <input type="text" class="form-control" id="inputZip" name="inputZip">
   </div>      
   <div class="col-md-10">
     <label for="description">Hostel Description</label>
-    <textarea class="form-control" id="description" rows="3"></textarea>
+    <textarea class="form-control" id="description" rows="3" name="description"></textarea>
   </div>
 
     <div class="col-md-3">
       <label for="rent">Monthly Rent</label>
-      <input type="number" class="form-control" id="rent" >
+      <input type="number" class="form-control" id="rent" name="rent" >
     </div>
     <div class="col-md-3">
       <label for="deposit">Initial Deposit</label>
-      <input type="number" class="form-control" id="deposit" >
+      <input type="number" class="form-control" id="deposit" name="deposit">
     </div>
     
     <div class ="col-md-12">
+    <label for="area1"></label>
     <input id="mess" type="checkbox" class="field" name="mess">Mess available
-     </div><br>
-    <div class ="col-md-12">
+    <label for="area2"></label>
     <input id="ac" type="checkbox" class="field" name="ac">AC available
-     </div>           
-     <div class ="col-md-12">
+     <label for="area3"></label>
     <input id="visitor" type="checkbox" class="field" name="visitor">Visitor Entry allowed
-    </div>
-    <div class ="col-md-12">
+    <label for="area4"></label>
     <input id="water" type="checkbox" class="field" name="water">Water Cooler available
-    </div>
-    <div class ="col-md-12">
+    <label for="area5"></label>
     <input id="room" type="checkbox" class="field" name="room">Room Cleaning available
-    </div>
-    <div class ="col-md-12">
+    <label for="area6"></label>
     <input id="veg" type="checkbox" class="field" name="veg">Non veg allowed
     </div>
 <div class="col-md-5">
 
        <label for="image1" class="form-label">Choose Image 1</label>
-        <input class="form-control" type="file" id="image1">
+        <input class="form-control" type="file" id="image1" name="image1">
 </div>
 <div class="col-md-5">
        <label for="image2" class="form-label">Choose Image 2</label>
-        <input class="form-control" type="file" id="image2">
+        <input class="form-control" type="file" id="image2" name="image2">
 </div>
 <div class="col-md-3">
   <button type="submit" class="btn btn-primary" >Submit</button>

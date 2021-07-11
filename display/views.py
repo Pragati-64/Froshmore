@@ -15,28 +15,51 @@ my_id=1
 IMAGE_FILE_TYPES = ['png', 'jpg', 'jpeg']
 
 def rentalserviceprovider(request):
-    if request.method=="GET":
-        name=request.GET.get('name')
-        state=request.GET.get('inputState')
-        city=request.GET.get('inputCity')
-        area=request.GET.get('area')
-        pincode=request.GET.get('inputZip')
-        address=request.GET.get('Address')
-        rent=request.GET.get('rent')
-        deposit=request.GET.get('deposit')
-        contactnumber=request.GET.get('contact')
-        mess= 1 if request.GET.get('mess',"off")=="on" else 0
-        mealtype=1 if request.GET.get('veg',"off")=="on" else 0
-        ac=1 if request.GET.get('ac,"off')=="on" else 0
-        visitor=1 if request.GET.get('visitor',"off")=="on" else 0
-        watercooler=1 if request.GET.get('water',"off")=="on" else 0
-        roomcleaning=1 if request.GET.get('room',"off")=="on" else 0
-        description=request.GET.get('description') 
-        #image1 = request.FILES['image1']
-        #image2 = request.FILES['image2']
-    
-    hostel.objects.create(hostel_name=name,hostel_state=state,hostel_city=city,hostel_area=area,hostel_pincode=pincode, hostel_address="dncld",hostel_rent=rent,hostel_deposit=rent,hostel_contactnumber=contactnumber,hostel_mess=1,hostel_mealtype=1,hostel_ac=1,hostel_vistorentry=0,hostel_watercooler=0,hostel_roomcleaning=1,hostel_description=description)
-    messages.info(request,"Your details are submitted successfully, Thank you for choosing us!")
+    if request.method=="POST":
+        name=request.POST['name']
+        state=request.POST['inputState']
+        city=request.POST['inputCity']
+        area=request.POST['area']
+        pincode=request.POST['inputZip']
+        address=request.POST['Address']
+        rent=request.POST['rent']
+        deposit=request.POST['deposit']
+        contactnumber=request.POST['contact']
+        description=request.POST['description']
+        mess=request.POST.get('mess',"off")
+        if mess=="on":
+            mess=1
+        else:
+            mess=0
+        mealtype=request.POST.get('veg',"off")
+        if mealtype=="on":
+            mealtype="non-veg"
+        else:
+            mealtype="veg"
+        ac=request.POST.get('ac',"off")
+        if ac=="on":
+            ac=1    
+        else:
+            ac=0
+        visitor=request.POST.get('visitor',"off")
+        if visitor=="on":
+            visitor=1 
+        else:
+            visitor=0   
+        water=request.POST.get('water',"off")
+        if water=="on":
+            water=1
+        else:
+            water=0
+        room=request.POST.get('room',"off")
+        if room=="on":
+            room=1
+        else:
+            room=0 
+        image1=request.POST.get('image1')
+        image2=request.POST.get('image2')  
+        ins=hostel(hostel_name=name,hostel_state=state,hostel_city=city,hostel_area=area,hostel_pincode=pincode, hostel_address=address,hostel_rent=rent,hostel_deposit=deposit,hostel_contactnumber=contactnumber,hostel_description=description,hostel_mess=mess,hostel_mealtype=mealtype,hostel_ac=ac,hostel_vistorentry=visitor,hostel_watercooler=water,hostel_roomcleaning=room,hostel_images1=image1,hostel_image2=image2)               
+        ins.save()        
     return render(request,"display/rentalserviceprovider.html")
 
 
