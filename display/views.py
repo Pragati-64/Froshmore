@@ -12,15 +12,46 @@ from .models import orders, user_query,hostel,tiffinservice,laundry,library
 amount_sum=100
 mode=1
 my_id=1
+IMAGE_FILE_TYPES = ['png', 'jpg', 'jpeg']
 
 def rentalserviceprovider(request):
+    if request.method=="GET":
+        name=request.GET.get('name')
+        state=request.GET.get('inputState')
+        city=request.GET.get('inputCity')
+        area=request.GET.get('area')
+        pincode=request.GET.get('inputZip')
+        address=request.GET.get('Address')
+        rent=request.GET.get('rent')
+        deposit=request.GET.get('deposit')
+        contactnumber=request.GET.get('contact')
+        mess= 1 if request.GET.get('mess',"off")=="on" else 0
+        mealtype=1 if request.GET.get('veg',"off")=="on" else 0
+        ac=1 if request.GET.get('ac,"off')=="on" else 0
+        visitor=1 if request.GET.get('visitor',"off")=="on" else 0
+        watercooler=1 if request.GET.get('water',"off")=="on" else 0
+        roomcleaning=1 if request.GET.get('room',"off")=="on" else 0
+        description=request.GET.get('description') 
+        #image1 = request.FILES['image1']
+        #image2 = request.FILES['image2']
+    
+    hostel.objects.create(hostel_name=name,hostel_state=state,hostel_city=city,hostel_area=area,hostel_pincode=pincode, hostel_address="dncld",hostel_rent=rent,hostel_deposit=rent,hostel_contactnumber=contactnumber,hostel_mess=1,hostel_mealtype=1,hostel_ac=1,hostel_vistorentry=0,hostel_watercooler=0,hostel_roomcleaning=1,hostel_description=description)
+    messages.info(request,"Your details are submitted successfully, Thank you for choosing us!")
     return render(request,"display/rentalserviceprovider.html")
+
+
 def tiffinserviceprovider(request):
     return render(request,"display/tiffinserviceprovider.html")
+
+
 def laundryserviceprovider(request):
     return render(request,"display/laundryserviceprovider.html")
+
+
 def libraryserviceprovider(request):
     return render(request,"display/libraryserviceprovider.html")
+
+
 def allservices(request):
     return render(request,"display/allservices.html")
 
@@ -108,7 +139,7 @@ def register(request):
                 else:        
                     if agree == "on":
                         user = User.objects.create_user(first_name=name,username=username, email=email,password = pass1)
-                        user.save();
+                        user.save()
                         return redirect('/login/')
                     else:
                         messages.info(request,"Process can't be completed without agreeing to TERMS and CONDITIONS")
