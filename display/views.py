@@ -5,6 +5,8 @@ from django.contrib import messages
 from django.http import JsonResponse
 import json
 from .models import orders, user_query,hostel,tiffinservice,laundry,library
+from django.conf import settings
+from django.core.files.storage import FileSystemStorage
 # Create your views here.
 
 
@@ -15,7 +17,7 @@ my_id=1
 IMAGE_FILE_TYPES = ['png', 'jpg', 'jpeg']
 
 def rentalserviceprovider(request):
-    if request.method=="POST":
+    if request.method=="POST" and request.FILES['image1'] and request.FILES['image2']:
         name=request.POST['name']
         state=request.POST['inputState']
         city=request.POST['inputCity']
@@ -56,14 +58,56 @@ def rentalserviceprovider(request):
             room=1
         else:
             room=0 
-        image1=request.POST.get('image1')
-        image2=request.POST.get('image2')  
-        ins=hostel(hostel_name=name,hostel_state=state,hostel_city=city,hostel_area=area,hostel_pincode=pincode, hostel_address=address,hostel_rent=rent,hostel_deposit=deposit,hostel_contactnumber=contactnumber,hostel_description=description,hostel_mess=mess,hostel_mealtype=mealtype,hostel_ac=ac,hostel_vistorentry=visitor,hostel_watercooler=water,hostel_roomcleaning=room,hostel_images1=image1,hostel_image2=image2)               
-        ins.save()        
+        image1 = request.FILES['image1']
+        fs = FileSystemStorage()
+        filename = fs.save(image1.name, image1)
+        url1 = fs.url(filename)
+        print(url1)
+        image2 = request.FILES['image2']
+        fs = FileSystemStorage()
+        filename = fs.save(image2.name, image2)
+        url2 = fs.url(filename)
+        print(2)
+        url1=url1[7:]
+        url2=url2[6:]
+        ins=hostel(hostel_images1=url1,hostel_image2=url2,hostel_name=name,hostel_state=state,hostel_city=city,hostel_area=area,hostel_pincode=pincode, hostel_address=address,hostel_rent=rent,hostel_deposit=deposit,hostel_contactnumber=contactnumber,hostel_description=description,hostel_mess=mess,hostel_mealtype=mealtype,hostel_ac=ac,hostel_vistorentry=visitor,hostel_watercooler=water,hostel_roomcleaning=room)               
+        ins.save()  
+        messages.info(request,"Your details are submitted, Thank you for choosing us!")      
     return render(request,"display/rentalserviceprovider.html")
 
 
 def tiffinserviceprovider(request):
+    if request.method=="POST" and request.FILES['image1'] and request.FILES['image2']:
+        tiffinservice_name=request.POST['name']
+        tiffinservice_state=request.POST['state']
+        tiffinservice_city=request.POST['city']
+        tiffinservice_area=request.POST['area']
+        tiffinservice_address=request.POST['Address']
+        tiffinservice_pincode=request.POST['pincode']
+        tiffinservice_price=request.POST['price']
+        tiffinservice_contactnumber=request.POST['contact']
+        tiffinservice_mealtype=request.POST['mealtype']
+        if tiffinservice_mealtype == "YES" or tiffinservice_mealtype == "yes":
+            tiffinservice_mealtype="non-veg"
+        else:
+            tiffinservice_mealtype="veg"
+        tiffinservice_mealsperday=request.POST['mealperday']
+        tiffinservice_description=request.POST['description']
+        image1 = request.FILES['image1']
+        fs = FileSystemStorage()
+        filename = fs.save(image1.name, image1)
+        url1 = fs.url(filename)
+        print(url1)
+        image2 = request.FILES['image2']
+        fs = FileSystemStorage()
+        filename = fs.save(image2.name, image2)
+        url2 = fs.url(filename)
+        print(2)
+        url1=url1[7:]
+        url2=url2[6:]
+        ins=tiffinservice(tiffinservice_images1=url1,tiffinservice_image2=url2,tiffinservice_description=tiffinservice_description,tiffinservice_mealsperday=tiffinservice_mealsperday,tiffinservice_contactnumber=tiffinservice_contactnumber,tiffinservice_name=tiffinservice_name,tiffinservice_state=tiffinservice_state,tiffinservice_city=tiffinservice_city,tiffinservice_area=tiffinservice_area,tiffinservice_pincode=tiffinservice_pincode,tiffinservice_address=tiffinservice_address,tiffinservice_price=tiffinservice_price)
+        ins.save()
+        messages.info(request,"Your details are submitted, Thank you for choosing us!")
     return render(request,"display/tiffinserviceprovider.html")
 
 

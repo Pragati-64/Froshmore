@@ -1,91 +1,191 @@
-<!doctype html>
+{% load static %}
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+div {
+  background-image: url('{% static 'display/img/service.jpg'%}');
+}
+</style>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@1,300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href={% static "display/css/style.css" %}> 
+     <link rel="stylesheet" href={% static "display/css/indexnavbar.css" %}>  
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+   <title>hostel detail entry</title>
+</head>
+<body >
+    <!-- Import typed.min.js file from typed.js folder -->
+    <script src= {% static 'display/typed.js-master/lib/typed.min.js'%}></script>
+    </script>
+<!--img src="{% static 'display/img/logoicon.png'%}" height="70" width="70" alt=""-->
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
-    <title>Rental Form</title>
-  </head>
-  <body>
-    <h1 class="text-center">Enter details of your service : </h1>
-    
-  <form class="row g-3 y-10" method="POST" action="{% url 'rentalserviceprovider' %}" >
-  {% csrf_token %}
-  <div class="col-md-4">
-    <label for="name" class="form-label">Hostel Name</label>
-    <input type="name" class="form-control" id="name" name="name" >
-  </div>
-  <div class="col-md-4">
-    <label for="contact" class="form-label">Contact Number</label>
-    <input type="phone" class="form-control" id="contact" name="contact">
-  </div>
-  <div class="col-10">
-    <label for="Address" class="form-label">Address </label>
-    <input type="text" class="form-control" id="Address" name="Address" >
-  </div>
-  <br>
-  <div class="col-md-4">
-    <label for="area" class="form-label">area</label>
-    <input type="text" class="form-control" id="area" name="area">
-  </div> 
-  <div class="col-md-4">
-    <label for="inputCity" class="form-label">City</label>
-    <input type="text" class="form-control" name="inputCity" id="inputCity">
-  </div>
-  <div class="col-md-4">
-    <label for="inputState" class="form-label">State</label>
-    <input type="text" class="form-control" id="inputState" name="inputState">
-  </div>
-  <div class="col-md-2">
-    <label for="inputZip" class="form-label">PinCode</label>
-    <input type="text" class="form-control" id="inputZip" name="inputZip">
-  </div>      
-  <div class="col-md-10">
-    <label for="description">Hostel Description</label>
-    <textarea class="form-control" id="description" rows="3" name="description"></textarea>
-  </div>
-
-    <div class="col-md-3">
-      <label for="rent">Monthly Rent</label>
-      <input type="number" class="form-control" id="rent" name="rent" >
-    </div>
-    <div class="col-md-3">
-      <label for="deposit">Initial Deposit</label>
-      <input type="number" class="form-control" id="deposit" name="deposit">
-    </div>
-    
-    <div class ="col-md-12">
+   
+    <div class="contact_us" >
+        
+        <h1>
+            <a id="2"> Enter hostel details </a>
+        </h1>
+        <div class="container">
+            <div class="contact-box">
+        <form method="POST" action="{% url 'tiffinserviceprovider' %}" enctype="multipart/form-data">
+                {% csrf_token %}
+				<label for="name"></label>
+				<input type="text" id="name" name="name" class="field" placeholder="Hostel Name">
+        <label for="inputState"></label>
+				<input type="text" id="inputState" name="inputState" class="field" placeholder="state">
+        <label for="inputCity"></label>
+				<input type="text" id="inputCity" name="inputCity" class="field" placeholder="City">
+        <label for="area"></label>
+        <input type="text" id="area" name="area" class="field" placeholder="location">
+        <label for="inputZip"></label>
+        <input type="text" id="inputZip" name="inputZip" class="field" placeholder="your area pincode">        
+        <label for="Address" class="form-label"></label>
+        <input type="text" id="Address" name="Address" class="field" placeholder="address">
+        <label for="rent"></label>
+        <input type="number" id="rent" name="rent" class="field" placeholder="monthly rent">
+        <label for="deposit"></label>
+        <input type="number" id="deposit" name="deposit" class="field" placeholder="intial deposit">
+        <label for="contact"></label>
+        <input type="phone" id="contact" name="contact" class="field" placeholder="Phone number">
+        <label for="description"></label>
+        <textarea placeholder="description" id="description" name="description" row="3" class="field"></textarea>   
+        <div class ="field">
     <label for="area1"></label>
     <input id="mess" type="checkbox" class="field" name="mess">Mess available
+    </div>
+    <div class ="field">
     <label for="area2"></label>
     <input id="ac" type="checkbox" class="field" name="ac">AC available
+    </div>
+    <div class ="field">
      <label for="area3"></label>
     <input id="visitor" type="checkbox" class="field" name="visitor">Visitor Entry allowed
+    </div>
+    <div class ="field">
     <label for="area4"></label>
     <input id="water" type="checkbox" class="field" name="water">Water Cooler available
+    </div>
+    <div class ="field">
     <label for="area5"></label>
     <input id="room" type="checkbox" class="field" name="room">Room Cleaning available
+    </div>
+    <div class ="field">
     <label for="area6"></label>
     <input id="veg" type="checkbox" class="field" name="veg">Non veg allowed
     </div>
-<div class="col-md-5">
-
-       <label for="image1" class="form-label">Choose Image 1</label>
+        <div class="field">     
+				<label for="image1" class="form-label">image 1</label>
         <input class="form-control" type="file" id="image1" name="image1">
-</div>
-<div class="col-md-5">
-       <label for="image2" class="form-label">Choose Image 2</label>
-        <input class="form-control" type="file" id="image2" name="image2">
-</div>
-<div class="col-md-3">
-  <button type="submit" class="btn btn-primary" >Submit</button>
-  </div>
-</form>    
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
-  </body>
+        </div>
+        <div class="field">
+        <label for="image2" class="form-label">image 2</label>
+        <input class="form-control" type="file" id="image2" name="image2" >
+        </div>
+				<button type="submit" class="btn">Submit</button>
+        </form>  
+		    </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        
+            Made by <a href="https://github.com/Neeraj-2307" target="_blank">&nbsp;&nbsp;Neeraj Joshi</a>
+            <a href="https://github.com/Pragati-64" target="_blank">&nbsp;&nbsp;Pragati Gupta</a>
+            <a href="https://github.com/anjalirajj" target="_blank">&nbsp;&nbsp;Anjali Raj</a>
+            <a href="https://github.com/aparnasingh26" target="_blank">&nbsp;&nbsp;Aparna Singh</a>
+        
+    </div>
+
+      
+    <!-- Add jquery cdn -->
+    <script src=
+"https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+    </script>
+  
+    <!-- Add this script for successful 
+        implementation of typed.js  -->
+    <script>
+        if ($(".text-slider").length == 1) {
+              
+            var typed_strings = 
+                $(".text-slider-items").text();
+  
+            var typed = new Typed(".text-slider", {
+                strings: typed_strings.split(", "),
+                typeSpeed: 50,
+                loop: true,
+                backDelay: 900,
+                backSpeed: 30,
+            });
+        }
+    </script>
+
+
+<!-- added the following script to avoid the reloading problem -->
+
+    <script>
+        if ( window.history.replaceState ) {
+        window.history.replaceState( null, null, window.location.href );
+        }
+    </script>
+    <!--js for navbar-->
+     <script>
+    function myFunction() {
+  var x = document.getElementById("myTopnav");
+  if (x.className === "topnav" || x.className === "topnav-right") {
+    x.className += " responsive";
+  } else {
+    x.className = "topnav";
+  }
+}
+    </script>
+</body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+  
+  
+
+  
+      
+  
+    
+ 
+    
