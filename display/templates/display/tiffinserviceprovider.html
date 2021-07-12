@@ -27,34 +27,47 @@ div {
     <div class="contact_us" >
         
         <h1>
-            <a id="2"> Enter  tiffin service details </a>
+            <a id="2"> Enter Tiffin Service Details </a>
         </h1>
         <div class="container">
             <div class="contact-box">
         <form method="POST" action="{% url 'tiffinserviceprovider' %}" enctype="multipart/form-data">
                 {% csrf_token %}
 				<label for="name"></label>
-				<input type="text" id="name" name="name" class="field" placeholder="tiffin service Name">
-        <label for="state"></label>
-				<input type="text" id="state" name="state" class="field" placeholder="state">
-        <label for="city"></label>
-				<input type="text" id="city" name="city" class="field" placeholder="city">
+				<input type="text" id="name" name="name" class="field" placeholder="Tiffin service Name">
+        <!--Dropdown for city and state-->
+        <div class="field">
+        <label for="inputCity" >Select City&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+        <select name="inputCity" >
+           {% for city in cities %}
+             <option value="{{city}}">{{ city }}</option>
+            {% endfor %}
+           </select>
+        </div>
+        <div class="field">
+        <label for="inputState">Select State&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+        <select name="inputState" >
+           {% for states in states %}
+             <option value="{{states}}">{{ states }}</option>
+            {% endfor %}
+           </select>
+        </div>
         <label for="area"></label>
-        <input type="text" id="area" name="area" class="field" placeholder="location">
+        <input type="text" id="area" name="area" class="field" placeholder="Location">
         <label for="pincode"></label>
-        <input type="text" id="pincode" name="pincode" class="field" placeholder="your area pincode">        
+        <input type="text" id="pincode" name="pincode" class="field" placeholder="your Area Pincode">        
         <label for="Address" class="form-label"></label>
-        <input type="text" id="Address" name="Address" class="field" placeholder="address">
+        <input type="text" id="Address" name="Address" class="field" placeholder="Address">
         <label for="price"></label>
-        <input type="number" id="price" name="price" class="field" placeholder="monthly amount">
+        <input type="number" id="price" name="price" class="field" placeholder="Monthly amount">
         <label for="contact"></label>
         <input type="phone" id="contact" name="contact" class="field" placeholder="Phone number">
         <label for="description"></label>
-        <textarea placeholder="description" id="description" name="description" row="3" class="field"></textarea>   
+        <textarea placeholder="Description" id="description" name="description" row="3" class="field"></textarea>   
         <label for="mealtype"></label>                
-       <input id="mealtype" type="text" class="field" name="mealtype" placeholder="if non veg provided type YES">
+       <input id="mealtype" type="text" class="field" name="mealtype" placeholder="If non veg provided type YES">
        <label for="mealperday"></label>
-       <input type="number" id="mealperday" name="mealperday" class="field" placeholder="mela per day(1/2/3)">
+       <input type="number" id="mealperday" name="mealperday" class="field" placeholder="Meals per day(1/2/3)">
           <div class="field">     
 				<label for="image1" class="form-label">image 1</label>
         <input class="form-control" type="file" id="image1" name="image1">

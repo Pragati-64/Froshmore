@@ -27,32 +27,44 @@ div {
     <div class="contact_us" >
         
         <h1>
-            <a id="2"> Enter hostel details </a>
+            <a id="2"> Enter Hostel Details </a>
         </h1>
         <div class="container">
             <div class="contact-box">
-        <form method="POST" action="{% url 'tiffinserviceprovider' %}" enctype="multipart/form-data">
+        <form method="POST" action="{% url 'rentalserviceprovider' %}" enctype="multipart/form-data">
                 {% csrf_token %}
 				<label for="name"></label>
 				<input type="text" id="name" name="name" class="field" placeholder="Hostel Name">
         <label for="inputState"></label>
-				<input type="text" id="inputState" name="inputState" class="field" placeholder="state">
-        <label for="inputCity"></label>
-				<input type="text" id="inputCity" name="inputCity" class="field" placeholder="City">
-        <label for="area"></label>
-        <input type="text" id="area" name="area" class="field" placeholder="location">
+				<div class="field">
+        <label for="inputCity" >Select City&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+        <select name="inputCity" >
+           {% for city in cities %}
+             <option value="{{city}}">{{ city }}</option>
+            {% endfor %}
+           </select>
+        </div>
+        <div class="field">
+        <label for="inputState">Select State&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+        <select name="inputState" >
+           {% for states in states %}
+             <option value="{{states}}">{{ states }}</option>
+            {% endfor %}
+           </select>
+        </div>
+        <input type="text" id="area" name="area" class="field" placeholder="Location">
         <label for="inputZip"></label>
-        <input type="text" id="inputZip" name="inputZip" class="field" placeholder="your area pincode">        
+        <input type="text" id="inputZip" name="inputZip" class="field" placeholder="Your Area Pincode">        
         <label for="Address" class="form-label"></label>
-        <input type="text" id="Address" name="Address" class="field" placeholder="address">
+        <input type="text" id="Address" name="Address" class="field" placeholder="Address">
         <label for="rent"></label>
-        <input type="number" id="rent" name="rent" class="field" placeholder="monthly rent">
+        <input type="number" id="rent" name="rent" class="field" placeholder="Monthly Rent">
         <label for="deposit"></label>
-        <input type="number" id="deposit" name="deposit" class="field" placeholder="intial deposit">
+        <input type="number" id="deposit" name="deposit" class="field" placeholder="Intial Deposit">
         <label for="contact"></label>
         <input type="phone" id="contact" name="contact" class="field" placeholder="Phone number">
         <label for="description"></label>
-        <textarea placeholder="description" id="description" name="description" row="3" class="field"></textarea>   
+        <textarea placeholder="Description" id="description" name="description" row="3" class="field"></textarea>   
         <div class ="field">
     <label for="area1"></label>
     <input id="mess" type="checkbox" class="field" name="mess">Mess available

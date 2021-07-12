@@ -10,12 +10,16 @@ from django.core.files.storage import FileSystemStorage
 # Create your views here.
 
 
-
 amount_sum=100
 mode=1
 my_id=1
 IMAGE_FILE_TYPES = ['png', 'jpg', 'jpeg']
-
+k=hostel.objects.all()
+states=set("")
+cities=set("")
+for i in k:
+    states.add(i.hostel_state)
+    cities.add(i.hostel_city)
 def rentalserviceprovider(request):
     if request.method=="POST" and request.FILES['image1'] and request.FILES['image2']:
         name=request.POST['name']
@@ -73,14 +77,14 @@ def rentalserviceprovider(request):
         ins=hostel(hostel_images1=url1,hostel_image2=url2,hostel_name=name,hostel_state=state,hostel_city=city,hostel_area=area,hostel_pincode=pincode, hostel_address=address,hostel_rent=rent,hostel_deposit=deposit,hostel_contactnumber=contactnumber,hostel_description=description,hostel_mess=mess,hostel_mealtype=mealtype,hostel_ac=ac,hostel_vistorentry=visitor,hostel_watercooler=water,hostel_roomcleaning=room)               
         ins.save()  
         messages.info(request,"Your details are submitted, Thank you for choosing us!")      
-    return render(request,"display/rentalserviceprovider.html")
+    return render(request,"display/rentalserviceprovider.html",{'states':states,'cities':cities})
 
 
 def tiffinserviceprovider(request):
     if request.method=="POST" and request.FILES['image1'] and request.FILES['image2']:
         tiffinservice_name=request.POST['name']
-        tiffinservice_state=request.POST['state']
-        tiffinservice_city=request.POST['city']
+        tiffinservice_state=request.POST['inputState']
+        tiffinservice_city=request.POST['inputCity']
         tiffinservice_area=request.POST['area']
         tiffinservice_address=request.POST['Address']
         tiffinservice_pincode=request.POST['pincode']
@@ -108,15 +112,53 @@ def tiffinserviceprovider(request):
         ins=tiffinservice(tiffinservice_images1=url1,tiffinservice_image2=url2,tiffinservice_description=tiffinservice_description,tiffinservice_mealsperday=tiffinservice_mealsperday,tiffinservice_contactnumber=tiffinservice_contactnumber,tiffinservice_name=tiffinservice_name,tiffinservice_state=tiffinservice_state,tiffinservice_city=tiffinservice_city,tiffinservice_area=tiffinservice_area,tiffinservice_pincode=tiffinservice_pincode,tiffinservice_address=tiffinservice_address,tiffinservice_price=tiffinservice_price)
         ins.save()
         messages.info(request,"Your details are submitted, Thank you for choosing us!")
-    return render(request,"display/tiffinserviceprovider.html")
+    return render(request,"display/tiffinserviceprovider.html",{'states':states,'cities':cities})
 
 
 def laundryserviceprovider(request):
-    return render(request,"display/laundryserviceprovider.html")
+    if request.method=="POST" and request.FILES['image1'] :
+        name=request.POST['name']
+        state=request.POST['inputState']
+        city=request.POST['inputCity']
+        area=request.POST['area']
+        pincode=request.POST['inputZip']
+        address=request.POST['Address']
+        deposit=request.POST['deposit']
+        contactnumber=request.POST['contact']
+        description=request.POST['description']
+        image1 = request.FILES['image1']
+        fs = FileSystemStorage()
+        filename = fs.save(image1.name, image1)
+        url1 = fs.url(filename)
+        print(url1)
+        url1=url1[7:]
+        ins=laundry(laundry_images1=url1,laundry_name=name,laundry_state=state,laundry_city=city,laundry_area=area,laundry_pincode=pincode, laundry_address=address,laundry_price=deposit,laundry_contactnumber=contactnumber,laundry_description=description)               
+        ins.save()  
+        messages.info(request,"Your details are submitted, Thank you for choosing us!") 
+    return render(request,"display/laundryserviceprovider.html",{'states':states,'cities':cities})
 
 
 def libraryserviceprovider(request):
-    return render(request,"display/libraryserviceprovider.html")
+     if request.method=="POST" and request.FILES['image1'] :
+        name=request.POST['name']
+        state=request.POST['inputState']
+        city=request.POST['inputCity']
+        area=request.POST['area']
+        pincode=request.POST['inputZip']
+        address=request.POST['Address']
+        deposit=request.POST['deposit']
+        contactnumber=request.POST['contact']
+        description=request.POST['description']
+        image1 = request.FILES['image1']
+        fs = FileSystemStorage()
+        filename = fs.save(image1.name, image1)
+        url1 = fs.url(filename)
+        print(url1)
+        url1=url1[7:]
+        ins=library(library_images1=url1,library_name=name,library_state=state,library_city=city,library_area=area,library_pincode=pincode, library_address=address,library_deposit=deposit,library_contactnumber=contactnumber,library_description=description)               
+        ins.save()  
+        messages.info(request,"Your details are submitted, Thank you for choosing us!") 
+     return render(request,"display/libraryserviceprovider.html",{'states':states,'cities':cities})
 
 
 def allservices(request):
